@@ -1,0 +1,68 @@
+<<!DOCTYPE html>
+<html>
+<head>
+    <title>Creator Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 style="color:white; font-size:42px; font-weight:bold; text-align:center;">
+    Welcome to Creator Hub
+</h1>
+
+    <p style="color:#f0f0f0; font-size:18px; text-align:center;">
+    Connect, Create and Grow your ideas
+</p>
+    <button onclick="location.href='login.html'">
+        Login
+    </button>
+
+    <br><br>
+
+    <button onclick="location.href='register.html'">
+        Register
+    </button>
+
+</div>
+<<script>
+function loginUser() {
+
+    const username = document.querySelector('input[type="text"]').value;
+    const password = document.querySelector('input[type="password"]').value;
+
+    if (username === "" || password === "") {
+        alert("Please enter username and password");
+        return;
+    }
+
+    fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            username: username,
+            password: password
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+
+        if (data === "Login successful") {
+            window.location.href = "dashboard.html";
+        } else {
+            alert(data);
+        }
+
+    })
+    .catch(error => {
+        console.error("Backend connection failed:", error);
+        alert("Backend connection failed");
+    });
+}
+</script>
+</body>
+</html>

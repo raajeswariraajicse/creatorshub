@@ -1,0 +1,106 @@
+<<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register - Creator Hub</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>Create Account</h1>
+
+    <p>Join Creator Hub and start your journey.</p>
+
+    <input type="text" id="name" placeholder="Full Name">
+
+    <input type="email" id="email" placeholder="Email">
+
+    <input type="password" id="password" placeholder="Password">
+
+    <input type="password" id="confirmPassword" placeholder="Confirm Password">
+
+    <button onclick="registerUser()">Register</button>
+
+    <p class="login-link">
+        Already have an account?
+        <a href="login.html">Login</a>
+    </p>
+
+</div>
+
+
+<script>
+
+function registerUser() {
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (name === "" || email === "" || password === "" || confirmPassword === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+    }
+
+    fetch("http://localhost:8080/api/register", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+
+        body: new URLSearchParams({
+            name: name,
+            email: email,
+            password: password
+        })
+
+    })
+
+    .then(response => response.text())
+
+    .then(data => {
+
+        if (data === "Registration successful") {
+
+            alert("Registration successful!");
+
+            window.location.href = "login.html";
+
+        } else {
+
+            alert(data);
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error("Backend connection failed:", error);
+
+        alert("Backend connection failed");
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
