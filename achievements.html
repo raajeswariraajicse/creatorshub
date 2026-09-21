@@ -1,34 +1,1417 @@
+
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Achievements</title>
+
+    <title>Achievements - Creator Hub</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =================================
+           MAIN PAGE
+        ================================= */
+
+        body {
+            min-height: 100vh;
+            height: auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
+            padding: 50px 20px;
+
+            box-sizing: border-box;
+        }
+
+
+        .achievement-page {
+            width: 100%;
+            max-width: 1000px;
+
+            text-align: center;
+        }
+
+
+        /* =================================
+           HEADER
+        ================================= */
+
+        .achievement-header {
+            margin-bottom: 35px;
+        }
+
+
+        .achievement-header h1 {
+            color: white;
+
+            font-size: 42px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+
+            text-shadow:
+                0 4px 12px rgba(0,0,0,0.25);
+        }
+
+
+        .achievement-header p {
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 500;
+        }
+
+
+        /* =================================
+           CATEGORY PAGE
+        ================================= */
+
+        #categoryPage {
+            display: block;
+        }
+
+
+        .category-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+
+            margin-top: 30px;
+        }
+
+
+        .category-card {
+
+            background: rgba(255,255,255,0.95);
+
+            border-radius: 22px;
+
+            padding: 30px 20px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0,0,0,0.18);
+
+            transition: 0.3s;
+
+            border: 2px solid transparent;
+        }
+
+
+        .category-card:hover {
+
+            transform: translateY(-8px);
+
+            border-color: #a855f7;
+
+            box-shadow:
+                0 18px 35px
+                rgba(0,0,0,0.25);
+        }
+
+
+        .category-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .category-card h2 {
+
+            margin: 8px 0;
+
+            color: #5b21b6;
+
+            font-size: 22px;
+
+            font-weight: 800;
+        }
+
+
+        .category-card p {
+
+            color: #666;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =================================
+           RESULT PAGE
+        ================================= */
+
+        #resultPage {
+            display: none;
+        }
+
+
+        .result-header {
+
+            margin-bottom: 25px;
+        }
+
+
+        .result-header h1 {
+
+            color: white;
+
+            font-size: 36px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+
+        .result-header p {
+
+            color: white;
+
+            font-weight: 500;
+        }
+
+
+        /* =================================
+           RESULT CARDS
+        ================================= */
+
+        #achievementList {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+
+            margin-top: 25px;
+        }
+
+
+        .achievement-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            text-align: left;
+
+            box-shadow:
+                0 10px 28px
+                rgba(0,0,0,0.18);
+
+            transition: 0.3s;
+
+            position: relative;
+
+            overflow: hidden;
+
+            cursor: pointer;
+        }
+
+
+        .achievement-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 16px 32px
+                rgba(0,0,0,0.23);
+        }
+
+
+        /* =================================
+           CERTIFICATE STYLE
+        ================================= */
+
+        .certificate-card {
+
+            border-top: 6px solid #7b2cbf;
+        }
+
+
+        .certificate-card h2 {
+
+            color: #7b2cbf;
+
+            font-weight: 800;
+        }
+
+
+        /* =================================
+           AWARD STYLE
+        ================================= */
+
+        .award-card {
+
+            border-top: 6px solid #f59e0b;
+
+        }
+
+
+        .award-card h2 {
+
+            color: #d97706;
+
+            font-weight: 800;
+        }
+
+
+        /* =================================
+           BADGE STYLE
+        ================================= */
+
+        .badge-card {
+
+            border-top: 6px solid #2563eb;
+
+        }
+
+
+        .badge-card h2 {
+
+            color: #2563eb;
+
+            font-weight: 800;
+        }
+
+
+        /* =================================
+           CARD CONTENT
+        ================================= */
+
+        .achievement-card p {
+
+            color: #444;
+
+            line-height: 1.5;
+
+            margin: 9px 0;
+        }
+
+
+        .achievement-info {
+
+            background: #f8f7ff;
+
+            padding: 10px 12px;
+
+            border-radius: 10px;
+
+            margin-top: 12px;
+        }
+
+
+        .achievement-date {
+
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 6px 12px;
+
+            background: #f3e8ff;
+
+            color: #6b21a8;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .click-hint {
+
+            margin-top: 15px;
+
+            color: #7b2cbf;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        /* =================================
+           NO RESULT
+        ================================= */
+
+        .no-result {
+
+            background: white;
+
+            color: #444;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            font-weight: bold;
+
+            grid-column: 1 / -1;
+        }
+
+
+        /* =================================
+           BACK BUTTONS
+        ================================= */
+
+        .back-btn {
+
+            margin-top: 30px;
+
+            background: white;
+
+            color: #4f46e5;
+
+            width: 230px;
+
+            height: 48px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            border: none;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 15px
+                rgba(0,0,0,0.15);
+
+            transition: 0.3s;
+        }
+
+
+        .back-btn:hover {
+
+            transform: translateY(-2px);
+
+            background: #f5f3ff;
+        }
+
+
+        /* =================================
+           CERTIFICATE PAGE
+        ================================= */
+
+        #certificatePage {
+
+            display: none;
+
+            width: 100%;
+        }
+
+
+        .certificate-container {
+
+            max-width: 850px;
+
+            margin: 0 auto;
+
+            background: white;
+
+            padding: 15px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.25);
+        }
+
+
+        .certificate {
+
+            border: 8px solid #7b2cbf;
+
+            padding: 55px 40px;
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #faf5ff
+                );
+
+            border-radius: 10px;
+        }
+
+
+        .certificate-inner {
+
+            border: 2px solid #d8b4fe;
+
+            padding: 40px 25px;
+
+            text-align: center;
+
+            border-radius: 5px;
+        }
+
+
+        .certificate-logo {
+
+            font-size: 48px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .certificate-brand {
+
+            font-size: 16px;
+
+            letter-spacing: 3px;
+
+            color: #7b2cbf;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+        }
+
+
+        .certificate-title {
+
+            font-size: 38px;
+
+            color: #4c1d95;
+
+            margin: 18px 0 8px;
+
+            font-weight: 800;
+        }
+
+
+        .certificate-subtitle {
+
+            color: #666;
+
+            font-size: 16px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .certificate-recipient {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: #222;
+
+            margin: 20px 0;
+        }
+
+
+        .certificate-text {
+
+            color: #555;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            margin: 0 auto 20px;
+        }
+
+
+        .certificate-achievement {
+
+            font-size: 23px;
+
+            font-weight: 800;
+
+            color: #7b2cbf;
+
+            margin: 20px 0;
+        }
+
+
+        .certificate-organization {
+
+            font-size: 16px;
+
+            color: #444;
+
+            margin: 12px 0;
+        }
+
+
+        .certificate-date {
+
+            color: #666;
+
+            font-size: 14px;
+
+            margin-top: 20px;
+        }
+
+
+        .certificate-footer {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-end;
+
+            margin-top: 45px;
+
+            gap: 30px;
+        }
+
+
+        .certificate-sign {
+
+            text-align: center;
+
+            min-width: 180px;
+        }
+
+
+        .certificate-line {
+
+            border-top: 1px solid #777;
+
+            margin-bottom: 7px;
+        }
+
+
+        .certificate-sign p {
+
+            margin: 0;
+
+            font-size: 13px;
+
+            color: #555;
+        }
+
+
+        .certificate-note {
+
+            margin-top: 25px;
+
+            color: #888;
+
+            font-size: 11px;
+
+            font-style: italic;
+        }
+
+
+        .certificate-actions {
+
+            margin-top: 25px;
+
+            text-align: center;
+        }
+
+
+        .certificate-back {
+
+            background: white;
+
+            color: #4f46e5;
+
+            width: 230px;
+
+            height: 48px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            border: none;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 15px
+                rgba(0,0,0,0.15);
+
+            transition: 0.3s;
+        }
+
+
+        .certificate-back:hover {
+
+            transform: translateY(-2px);
+
+            background: #f5f3ff;
+        }
+
+
+        /* =================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 750px) {
+
+            .category-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            #achievementList {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .achievement-header h1 {
+
+                font-size: 32px;
+
+            }
+
+
+            .certificate {
+
+                padding: 25px 15px;
+
+            }
+
+
+            .certificate-inner {
+
+                padding: 25px 15px;
+
+            }
+
+
+            .certificate-title {
+
+                font-size: 28px;
+
+            }
+
+
+            .certificate-recipient {
+
+                font-size: 23px;
+
+            }
+
+
+            .certificate-footer {
+
+                flex-direction: column;
+
+                align-items: center;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-<h1>🏆 My Achievements</h1>
+<div class="achievement-page">
 
-<p style="color:white;">Track your achievements and certificates.</p>
 
-<br>
+    <!-- =================================
+         CATEGORY PAGE
+    ================================= -->
 
-<button>📜 View Certificates</button>
-<br><br>
+    <div id="categoryPage">
 
-<button>🥇 Awards</button>
-<br><br>
 
-<button>🏅 Badges</button>
-<br><br>
+        <div class="achievement-header">
 
-<button onclick="location.href='dashboard.html'">
-⬅ Back to Dashboard
-</button>
+            <h1>
+                🏆 My Achievements
+            </h1>
+
+            <p>
+                Celebrate your milestones, recognition and accomplishments ✨
+            </p>
+
+        </div>
+
+
+        <div class="category-grid">
+
+
+            <!-- CERTIFICATES -->
+
+            <div
+                class="category-card"
+                onclick="showAchievements('Certificate')">
+
+                <div class="category-icon">
+                    📜
+                </div>
+
+                <h2>
+                    Certificates
+                </h2>
+
+                <p>
+                    Showcase your learning,
+                    certifications and completed programs.
+                </p>
+
+            </div>
+
+
+            <!-- AWARDS -->
+
+            <div
+                class="category-card"
+                onclick="showAchievements('Award')">
+
+                <div class="category-icon">
+                    🥇
+                </div>
+
+                <h2>
+                    Awards
+                </h2>
+
+                <p>
+                    Highlight your recognitions,
+                    victories and special achievements.
+                </p>
+
+            </div>
+
+
+            <!-- BADGES -->
+
+            <div
+                class="category-card"
+                onclick="showAchievements('Badge')">
+
+                <div class="category-icon">
+                    🏅
+                </div>
+
+                <h2>
+                    Badges
+                </h2>
+
+                <p>
+                    Display your skills,
+                    milestones and digital badges.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="back-btn"
+            onclick="location.href='dashboard.html'">
+
+            ⬅ Back to Dashboard
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         RESULT PAGE
+    ================================= -->
+
+    <div id="resultPage">
+
+
+        <div class="result-header">
+
+            <h1 id="resultTitle">
+                🏆 Achievements
+            </h1>
+
+            <p>
+                Your achievements and milestones
+            </p>
+
+        </div>
+
+
+        <div id="achievementList"></div>
+
+
+        <button
+            class="back-btn"
+            onclick="backToCategories()">
+
+            ⬅ Back to Categories
+
+        </button>
+
+
+        <br>
+
+
+        <button
+            class="back-btn"
+            onclick="location.href='dashboard.html'">
+
+            🏠 Back to Dashboard
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         CERTIFICATE PAGE
+    ================================= -->
+
+    <div id="certificatePage">
+
+
+        <div class="result-header">
+
+            <h1>
+                📜 Certificate Preview
+            </h1>
+
+            <p>
+                Your Creator Hub achievement certificate
+            </p>
+
+        </div>
+
+
+        <div class="certificate-container">
+
+
+            <div class="certificate">
+
+
+                <div class="certificate-inner">
+
+
+                    <div class="certificate-logo">
+                        🏆
+                    </div>
+
+
+                    <div class="certificate-brand">
+                        CREATOR HUB
+                    </div>
+
+
+                    <div class="certificate-title">
+                        Certificate of Achievement
+                    </div>
+
+
+                    <div class="certificate-subtitle">
+                        This certificate recognizes the following achievement
+                    </div>
+
+
+                    <div class="certificate-recipient">
+                        Creator Hub Member
+                    </div>
+
+
+                    <div class="certificate-text">
+
+                        This is to recognize the successful completion
+                        and achievement associated with
+
+                    </div>
+
+
+                    <div
+                        class="certificate-achievement"
+                        id="certificateTitle">
+
+                        Achievement
+
+                    </div>
+
+
+                    <div
+                        class="certificate-organization"
+                        id="certificateOrganization">
+
+                        Organization
+
+                    </div>
+
+
+                    <div
+                        class="certificate-text"
+                        id="certificateDescription">
+
+                        Achievement description
+
+                    </div>
+
+
+                    <div
+                        class="certificate-date"
+                        id="certificateDate">
+
+                        Date
+
+                    </div>
+
+
+                    <div class="certificate-footer">
+
+
+                        <div class="certificate-sign">
+
+                            <div class="certificate-line"></div>
+
+                            <p>
+                                Creator Hub
+                            </p>
+
+                        </div>
+
+
+                        <div class="certificate-sign">
+
+                            <div class="certificate-line"></div>
+
+                            <p>
+                                Achievement Recognition
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="certificate-note">
+
+                        This is a Creator Hub achievement preview
+                        and is not an official certificate issued by
+                        the organization mentioned above.
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="certificate-actions">
+
+
+            <button
+                class="certificate-back"
+                onclick="backToAchievements()">
+
+                ⬅ Back to Achievements
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
 
 </div>
 
+
+
+<script>
+
+
+/* =================================
+   SHOW ACHIEVEMENTS
+================================= */
+
+function showAchievements(category) {
+
+
+    document.getElementById(
+        "categoryPage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "resultPage"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "certificatePage"
+    ).style.display = "none";
+
+
+    let title = "";
+
+
+    if (category === "Certificate") {
+
+        title = "📜 Certificates";
+
+    }
+
+    else if (category === "Award") {
+
+        title = "🥇 Awards";
+
+    }
+
+    else if (category === "Badge") {
+
+        title = "🏅 Badges";
+
+    }
+
+
+    document.getElementById(
+        "resultTitle"
+    ).innerText = title;
+
+
+    document.getElementById(
+        "achievementList"
+    ).innerHTML = `
+
+        <div class="no-result">
+
+            Loading achievements...
+
+        </div>
+
+    `;
+
+
+    fetch(
+        "http://localhost:8081/api/achievements"
+    )
+
+
+    .then(response => response.json())
+
+
+    .then(data => {
+
+
+        let result = "";
+
+
+        data.forEach(achievement => {
+
+
+            if (
+                achievement.title
+                    .toLowerCase()
+                    .includes(category.toLowerCase())
+            ) {
+
+
+                let cardClass = "";
+
+
+                if (category === "Certificate") {
+
+                    cardClass =
+                        "certificate-card";
+
+                }
+
+                else if (category === "Award") {
+
+                    cardClass =
+                        "award-card";
+
+                }
+
+                else if (category === "Badge") {
+
+                    cardClass =
+                        "badge-card";
+
+                }
+
+
+                let icon = "🏆";
+
+
+                if (category === "Certificate") {
+
+                    icon = "📜";
+
+                }
+
+                else if (category === "Award") {
+
+                    icon = "🥇";
+
+                }
+
+                else if (category === "Badge") {
+
+                    icon = "🏅";
+
+                }
+
+
+                result += `
+
+                    <div
+                        class="achievement-card ${cardClass}"
+                        onclick="openCertificate(
+                            '${achievement.title}',
+                            '${achievement.organization}',
+                            '${achievement.date}',
+                            '${achievement.description}'
+                        )">
+
+
+                        <h2>
+
+                            ${icon}
+                            ${achievement.title}
+
+                        </h2>
+
+
+                        <p>
+
+                            ${achievement.description}
+
+                        </p>
+
+
+                        <div class="achievement-info">
+
+                            <strong>
+                                🏢 Organization:
+                            </strong>
+
+                            ${achievement.organization}
+
+                        </div>
+
+
+                        <span class="achievement-date">
+
+                            📅 ${achievement.date}
+
+                        </span>
+
+
+                        <div class="click-hint">
+
+                            👆 Click to view certificate
+
+                        </div>
+
+
+                    </div>
+
+                `;
+
+            }
+
+        });
+
+
+        if (result === "") {
+
+            result = `
+
+                <div class="no-result">
+
+                    No achievements available
+                    in this category.
+
+                </div>
+
+            `;
+
+        }
+
+
+        document.getElementById(
+            "achievementList"
+        ).innerHTML = result;
+
+
+    })
+
+
+    .catch(error => {
+
+
+        document.getElementById(
+            "achievementList"
+        ).innerHTML = `
+
+            <div class="no-result">
+
+                ❌ Unable to load achievements.
+
+            </div>
+
+        `;
+
+
+        console.error(error);
+
+    });
+
+}
+
+
+
+/* =================================
+   OPEN CERTIFICATE
+================================= */
+
+function openCertificate(
+    title,
+    organization,
+    date,
+    description
+) {
+
+
+    document.getElementById(
+        "resultPage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "certificatePage"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "certificateTitle"
+    ).innerText = title;
+
+
+    document.getElementById(
+        "certificateOrganization"
+    ).innerText =
+        "Organization: " + organization;
+
+
+    document.getElementById(
+        "certificateDescription"
+    ).innerText =
+        description;
+
+
+    document.getElementById(
+        "certificateDate"
+    ).innerText =
+        "Achievement Date: " + date;
+
+}
+
+
+
+/* =================================
+   BACK TO CATEGORIES
+================================= */
+
+function backToCategories() {
+
+
+    document.getElementById(
+        "resultPage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "categoryPage"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "certificatePage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "achievementList"
+    ).innerHTML = "";
+
+}
+
+
+
+/* =================================
+   BACK TO ACHIEVEMENTS
+================================= */
+
+function backToAchievements() {
+
+
+    document.getElementById(
+        "certificatePage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "resultPage"
+    ).style.display = "block";
+
+}
+
+</script>
+
+
 </body>
+
 </html>

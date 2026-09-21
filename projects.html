@@ -1,34 +1,586 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Projects</title>
+
+    <title>My Projects - Creator Hub</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ================================
+           PROJECT PAGE
+        ================================= */
+
+        body {
+            min-height: 100vh;
+            height: auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
+            padding: 50px 20px;
+
+            box-sizing: border-box;
+        }
+
+
+        .project-page {
+            width: 100%;
+            max-width: 850px;
+
+            text-align: center;
+        }
+
+
+        /* ================================
+           HEADER
+        ================================= */
+
+        .project-header {
+            margin-bottom: 30px;
+        }
+
+
+        .project-header h1 {
+            color: white;
+
+            font-size: 42px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+
+            text-shadow:
+                0 4px 12px rgba(0,0,0,0.25);
+        }
+
+
+        .project-header p {
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 500;
+
+            margin: 0;
+        }
+
+
+        /* ================================
+           FORM CARD
+        ================================= */
+
+        .project-card {
+
+            background: rgba(255,255,255,0.94);
+
+            width: 100%;
+
+            padding: 35px;
+
+            box-sizing: border-box;
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.20);
+
+            text-align: left;
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        .project-card-title {
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            color: #5b21b6;
+
+            margin-bottom: 25px;
+
+            text-align: center;
+        }
+
+
+        /* ================================
+           FORM GROUP
+        ================================= */
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            color: #333;
+
+            margin-bottom: 8px;
+        }
+
+
+        .form-group input,
+        .form-group textarea {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 14px 16px;
+
+            border: 2px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            background: #fafafa;
+
+            font-size: 15px;
+
+            font-family: Arial, sans-serif;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+
+        .form-group textarea {
+
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+
+            border-color: #8b5cf6;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(139,92,246,0.12);
+        }
+
+
+        /* ================================
+           SAVE BUTTON
+        ================================= */
+
+        .save-project-btn {
+
+            width: 100%;
+
+            height: 55px;
+
+            margin: 10px 0 0 0;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7b2cbf,
+                    #4f46e5
+                );
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 20px rgba(79,70,229,0.30);
+
+            transition: 0.3s;
+        }
+
+
+        .save-project-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px rgba(79,70,229,0.40);
+        }
+
+
+        /* ================================
+           SUCCESS MESSAGE
+        ================================= */
+
+        #message {
+
+            margin: 20px 0 0 0;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            text-align: center;
+
+            min-height: 20px;
+        }
+
+
+        /* ================================
+           BACK BUTTON
+        ================================= */
+
+        .back-dashboard {
+
+            margin-top: 25px;
+
+            background: white;
+
+            color: #4f46e5;
+
+            border: none;
+
+            width: 230px;
+
+            height: 48px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.15);
+
+            transition: 0.3s;
+        }
+
+
+        .back-dashboard:hover {
+
+            transform: translateY(-2px);
+
+            background: #f5f3ff;
+        }
+
+
+        /* ================================
+           SMALL SCREEN
+        ================================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 30px 15px;
+            }
+
+
+            .project-header h1 {
+
+                font-size: 32px;
+
+            }
+
+
+            .project-card {
+
+                padding: 25px 20px;
+
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-<h1>📂 My Projects</h1>
+<div class="project-page">
 
-<p style="color:white;">Manage all your projects in one place.</p>
 
-<br>
+    <!-- HEADER -->
 
-<button>➕ Add New Project</button>
-<br><br>
+    <div class="project-header">
 
-<button>📋 View My Projects</button>
-<br><br>
+        <h1>📂 My Projects</h1>
 
-<button>✏️ Edit Project</button>
-<br><br>
+        <p>
+            Showcase your ideas, innovations and creations 🚀
+        </p>
 
-<button onclick="location.href='dashboard.html'">
-⬅ Back to Dashboard
-</button>
+    </div>
+
+
+
+    <!-- PROJECT FORM -->
+
+    <div class="project-card">
+
+
+        <div class="project-card-title">
+
+            ✨ Create Your Project
+
+        </div>
+
+
+
+        <!-- PROJECT NAME -->
+
+        <div class="form-group">
+
+            <label for="projectName">
+                📌 Project Name
+            </label>
+
+            <input
+                type="text"
+                id="projectName"
+                placeholder="Enter your project name"
+            >
+
+        </div>
+
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label for="description">
+                📝 Project Description
+            </label>
+
+            <textarea
+                id="description"
+                placeholder="Tell us about your project..."
+            ></textarea>
+
+        </div>
+
+
+
+        <!-- TECHNOLOGIES -->
+
+        <div class="form-group">
+
+            <label for="technologies">
+                💻 Technologies Used
+            </label>
+
+            <input
+                type="text"
+                id="technologies"
+                placeholder="Example: Java, Spring Boot, MySQL"
+            >
+
+        </div>
+
+
+
+        <!-- PROJECT LINK -->
+
+        <div class="form-group">
+
+            <label for="projectLink">
+                🔗 Project Link
+            </label>
+
+            <input
+                type="url"
+                id="projectLink"
+                placeholder="https://github.com/your-project"
+            >
+
+        </div>
+
+
+
+        <!-- SAVE -->
+
+        <button
+            class="save-project-btn"
+            onclick="saveProject()">
+
+            🚀 Save Project
+
+        </button>
+
+
+
+        <!-- MESSAGE -->
+
+        <p id="message"></p>
+
+
+    </div>
+
+
+
+    <!-- BACK -->
+
+    <button
+        class="back-dashboard"
+        onclick="location.href='dashboard.html'">
+
+        ⬅ Back to Dashboard
+
+    </button>
+
 
 </div>
+
+
+
+<script>
+
+
+function saveProject() {
+
+
+    const projectData = {
+
+        projectName:
+            document.getElementById("projectName").value,
+
+        description:
+            document.getElementById("description").value,
+
+        technologies:
+            document.getElementById("technologies").value,
+
+        projectLink:
+            document.getElementById("projectLink").value
+
+    };
+
+
+
+    fetch("http://localhost:8081/api/projects", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type":
+                "application/json"
+
+        },
+
+        body:
+            JSON.stringify(projectData)
+
+    })
+
+
+    .then(response => {
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to save project"
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+
+    .then(data => {
+
+
+        const message =
+            document.getElementById("message");
+
+
+        message.innerText =
+            "✅ Project saved successfully!";
+
+
+        message.style.background =
+            "#ecfdf5";
+
+
+        message.style.color =
+            "#047857";
+
+
+
+        document.getElementById(
+            "projectName"
+        ).value = "";
+
+
+        document.getElementById(
+            "description"
+        ).value = "";
+
+
+        document.getElementById(
+            "technologies"
+        ).value = "";
+
+
+        document.getElementById(
+            "projectLink"
+        ).value = "";
+
+
+    })
+
+
+    .catch(error => {
+
+
+        const message =
+            document.getElementById("message");
+
+
+        message.innerText =
+            "❌ Error saving project";
+
+
+        message.style.background =
+            "#fef2f2";
+
+
+        message.style.color =
+            "#dc2626";
+
+
+        console.error(error);
+
+    });
+
+}
+
+</script>
+
 
 </body>
 </html>

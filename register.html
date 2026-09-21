@@ -35,65 +35,97 @@
 
 </div>
 
-
 <script>
 
 function registerUser() {
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
+    // Check empty fields
     if (name === "" || email === "" || password === "" || confirmPassword === "") {
         alert("Please fill all fields");
         return;
     }
 
+    // Check password match
     if (password !== confirmPassword) {
         alert("Passwords do not match");
         return;
     }
 
-    fetch("http://localhost:8080/api/register", {
+    // Frontend password validation
+    if (password.length < 8) {
+        alert("Password must be at least 8 characters");
+        return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+        alert("Password must contain at least one uppercase letter");
+        return;
+    }
+
+    if (!/[a-z]/.test(password)) {
+        alert("Password must contain at least one lowercase letter");
+        return;
+    }
+
+    if (!/[0-9]/.test(password)) {
+        alert("Password must contain at least one number");
+        return;
+    }
+
+    if (!/[^a-zA-Z0-9]/.test(password)) {
+        alert("Password must contain at least one special character");
+        return;
+    }
+
+    // Send data to backend
+    fetch("http://localhost:8081/api/register", {
 
         method: "POST",
 
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/json"
         },
 
-        body: new URLSearchParams({
-            name: name,
+        body: JSON.stringify({
+            fullName: name,
             email: email,
             password: password
         })
 
     })
 
-    .then(response => response.text())
+    .then(async response => {
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Registration failed");
+        }
+
+        return data;
+
+    })
 
     .then(data => {
 
-        if (data === "Registration successful") {
+        console.log("Registration successful:", data);
 
-            alert("Registration successful!");
+        alert("Registration successful!");
 
-            window.location.href = "login.html";
-
-        } else {
-
-            alert(data);
-
-        }
+        window.location.href = "login.html";
 
     })
 
     .catch(error => {
 
-        console.error("Backend connection failed:", error);
+        console.error("Error:", error);
 
-        alert("Backend connection failed");
+        alert(error.message);
 
     });
 
